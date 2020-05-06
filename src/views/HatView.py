@@ -1,4 +1,4 @@
-#/src/views/HatView
+# /src/views/HatView
 
 from flask import request, json, Response, Blueprint
 from ..models.CharacterModel import CharacterModel, CharacterSchema
@@ -8,7 +8,8 @@ hat_api = Blueprint('hat_api', __name__)
 hat_schema = HatSchema()
 character_schema = CharacterSchema()
 
-@hat_api.route('/',methods=['POST'])
+
+@hat_api.route('/', methods=['POST'])
 def create():
     """
     The function to create a hat
@@ -19,39 +20,40 @@ def create():
     req_data = request.get_json()
 
     # Retrieve the character id
-    char_id=req_data.get('character_id')
+    char_id = req_data.get('character_id')
 
     # No character specified
     if not char_id:
-        return custom_response({'message':'character not specified'}, 400)
-    
+        return custom_response({'message': 'character not specified'}, 400)
+
     # Color doens't exist
-    if req_data.get('color') and req_data.get('color') not in ColorType._member_names_ :
-        return custom_response({'message':'color doesn\'t exist'}, 400)
-    
+    if (req_data.get('color') and
+            req_data.get('color') not in ColorType._member_names_):
+        return custom_response({'message': 'color doesn\'t exist'}, 400)
+
     # Search the character
     character = CharacterModel.get_char(char_id)
     # The character doens't exist
     if not character:
-        return custom_response({'message':'character doesn\'t exist'}, 400)
+        return custom_response({'message': 'character doesn\'t exist'}, 400)
 
     # Serialize the character with schema
     ser_char = character_schema.dump(character)
 
     # The character already has a hat
     if HatModel.char_has_hat(char_id):
-        return custom_response({'message':'the character specified already has a hat'}, 400)
+        return custom_response({'message': 'the character specified already has a hat'}, 400)
 
     # Check rules
-    err=HatModel.verify_hat_rules(ser_char,req_data)
+    err = HatModel.verify_hat_rules(ser_char, req_data)
     if err:
-        return err
+        return custom_response(err, 400)
 
     # Create the hat
     hat = HatModel(req_data)
     hat.save()
 
-    return custom_response({'message':'hat created'}, 201)
+    return custom_response({'message': 'hat created'}, 201)
 
 
 @hat_api.route('/', methods=['GET'])
@@ -63,7 +65,7 @@ def get_all_hat():
     """
     hats = HatModel.get_all_hats()
     ser_hats = hat_schema.dump(hats, many=True)
-    return custom_response(ser_hats, 200)  
+    return custom_response(ser_hats, 200)
 
 
 @hat_api.route('/<int:hat_id>', methods=['GET'])
@@ -78,7 +80,7 @@ def get_hat(hat_id):
     hat = HatModel.get_hat(hat_id)
     if not hat:
         return custom_response({'error': 'hat not found'}, 404)
-    
+
     ser_hat = hat_schema.dump(hat)
 
     return custom_response(ser_hat, 200)
@@ -100,16 +102,16 @@ def update(hat_id):
 
     # The hat doesn't exist
     if not hat:
-        return custom_response({'error':'hat not found'}, 400)
+        return custom_response({'error': 'hat not found'}, 400)
 
     # Get and serialize the character with schema
     character = CharacterModel.get_char(hat.character_id)
     ser_char = character_schema.dump(character)
 
     # Check rules
-    err=HatModel.verify_hat_rules(ser_char,req_data)
+    err = HatModel.verify_hat_rules(ser_char, req_data)
     if err:
-        return err
+        return custom_response(err, 400)
 
     # Update the hat
     hat = HatModel.get_hat(hat_id)
@@ -119,6 +121,7 @@ def update(hat_id):
     ser_hat = hat_schema.dump(hat)
 
     return custom_response(ser_hat, 200)
+
 
 @hat_api.route('/<int:hat_id>', methods=['DELETE'])
 def delete(hat_id):
@@ -134,11 +137,12 @@ def delete(hat_id):
 
     # The hat doesn't exist
     if not hat:
-        return custom_response({'error':'hat not found'}, 400)
+        return custom_response({'error': 'hat not found'}, 400)
 
     # We delete the hat
     hat.delete()
-    return custom_response({'message':'deleted'}, 200)
+    return custom_response({'message': 'deleted'}, 200)
+
 
 def custom_response(res, status_code):
     """

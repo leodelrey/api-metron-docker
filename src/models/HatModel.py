@@ -1,25 +1,25 @@
 # src/models/HatModel.py
 from . import db
 import enum
-from flask import Response, json
-from sqlalchemy.orm import relationship
-from sqlalchemy.sql import exists
 from marshmallow import fields, Schema
 from .Model import Model
+
 
 class ColorType(enum.Enum):
     """
     This is an enum class for the three color types of a hat
     """
+
     PURPLE = "PURPLE"
     YELLOW = "YELLOW"
     GREEN = "GREEN"
 
+
 class HatModel(Model):
-    """ 
-    This is a class to create, read, update and delete Hats 
-      
-    Attributes: 
+    """
+    This is a class to create, read, update and delete Hats
+
+    Attributes:
         id (int): The unique id of the hat
         color (Enum(ColorType)): The color of the hat
         character_id (int): The character associated
@@ -28,14 +28,14 @@ class HatModel(Model):
     __tablename__ = 'hat'
 
     # Hat's columns
-    id = db.Column(db.Integer,primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     color = db.Column(db.Enum(ColorType))
-    character_id = db.Column(db.Integer,db.ForeignKey('character.id'))
+    character_id = db.Column(db.Integer, db.ForeignKey('character.id'))
 
     def __init__(self, data):
         """
-        The constructor for Hat class. 
-        Parameters: 
+        The constructor for Hat class.
+        Parameters:
            data (dict): The hat-related data
         """
         self.color = data.get('color')
@@ -81,31 +81,29 @@ class HatModel(Model):
         Returns:
            bool: True if the character has a hat / False if not
         """
-        return HatModel.query.filter_by(character_id=id_char).count()>0
-        
+        return HatModel.query.filter_by(character_id=id_char).count() > 0
+
     @staticmethod
-    def verify_hat_rules(char_data,hat_data):
+    def verify_hat_rules(char_d, hat_d):
         """
-        The function checks if the hat rules are respected in the data specified
+        The function checks if the hat rules are respected
+        in the data specified
         Parameters:
-            char_data (dict): The parameters of the character
-            hat_data (dict): The parameters of the character
+            char_d (dict): The parameters of the character
+            hat_d (dict): The parameters of the hat
         Returns:
-           Response: The response error if rule isn't respected (None if rules are respected)
+           Response: The response error if rule isn't respected
+                    (None if rules are respected)
         """
         # Names with 'p' canno't wear yellow hat
-        if char_data.get('name') and ('p' in char_data.get('name') or 'P' in char_data.get('name')) and hat_data.get('color') and hat_data.get('color')=='YELLOW':
-            return Response(
-                mimetype="application/json",
-                response=json.dumps({'error':'character with name containing \'p\' canno\'t wear yellow hat'}),
-                status=400)
-
+        if (char_d.get('name') and hat_d.get('color') and
+                ('p' in char_d.get('name') or 'P' in char_d.get('name')) and
+                hat_d.get('color') and hat_d.get('color') == 'YELLOW'):
+            return {'error': 'character with \'p\' in his name can\'t wear yellow hat'}
         # Non human characters can't wear hat
-        if char_data.get('human')==False:
-            return Response(
-                mimetype="application/json",
-                response=json.dumps({'error':'non human character can\'t wear hat'}),
-                status=400)
+        if char_d.get('human') is False:
+            return {'error': 'non human character can\'t wear hat'}
+
 
 # Hat Schema to serialize Hat objects
 class HatSchema(Schema):

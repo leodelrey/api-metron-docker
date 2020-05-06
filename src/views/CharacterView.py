@@ -1,4 +1,4 @@
-#/src/views/CharacterView
+# /src/views/CharacterView
 
 from flask import request, json, Response, Blueprint
 from ..models.CharacterModel import CharacterModel, CharacterSchema
@@ -18,13 +18,13 @@ def create():
 
     # Retrieve the data
     req_data = request.get_json()
-    hat_data=req_data.pop('hat',None)
-    
+    hat_data = req_data.pop('hat', None)
+
     # Check rules
-    err=CharacterModel.verify_char_rules(req_data)
-    if err: 
-        return err
-    
+    err = CharacterModel.verify_char_rules(req_data)
+    if err:
+        return custom_response(err, 400)
+
     # Create the character
     character = CharacterModel(req_data)
     character.save()
@@ -32,17 +32,19 @@ def create():
     # Create an associated hat if requested
     if hat_data:
         # Color doens't exist
-        if req_data.get('color') and req_data.get('color') not in ColorType._member_names_ :
-            return custom_response({'message':'color doesn\'t exist'}, 400)
+        if (req_data.get('color') and
+                req_data.get('color') not in ColorType._member_names_):
+            return custom_response({'message': 'color doesn\'t exist'}, 400)
         # Check hat rules
-        err=HatModel.verify_hat_rules(req_data,hat_data)
+        err = HatModel.verify_hat_rules(req_data, hat_data)
         if err:
-            return err
+            return custom_response(err, 400)
         # Create the hat
-        hat=HatModel({"color":hat_data.get('color'),"character_id":character.id})
+        hat = HatModel({'color': hat_data.get('color'),
+                        'character_id': character.id})
         hat.save()
 
-    return custom_response({'message':'character created'}, 201)
+    return custom_response({'message': 'character created'}, 201)
 
 
 @character_api.route('/', methods=['GET'])
@@ -56,7 +58,7 @@ def get_all_char():
     characters = CharacterModel.get_all_chars()
     # Serialize the characters with schema
     ser_chars = character_schema.dump(characters, many=True)
-    return custom_response(ser_chars, 200)  
+    return custom_response(ser_chars, 200)
 
 
 @character_api.route('/<int:character_id>', methods=['GET'])
@@ -66,17 +68,18 @@ def get_char(character_id):
     Parameters:
         character_id (int): The primary key of the character
     Returns:
-        Response: The HTTP response (200 if updated, 404 if character not found)
+        Response: The HTTP response (200 if updated, 404 if not found)
     """
     # Search the character
     character = CharacterModel.get_char(character_id)
     # The character doesn't exist
     if not character:
         return custom_response({'error': 'character not found'}, 404)
-    
+
     # Serialize the characters with schema
     ser_char = character_schema.dump(character)
     return custom_response(ser_char, 200)
+
 
 @character_api.route('/<int:character_id>', methods=['PUT'])
 def update(character_id):
@@ -93,19 +96,19 @@ def update(character_id):
 
     # The character doesn't exist
     if not character:
-        return custom_response({'error':'character not found'}, 400)
+        return custom_response({'error': 'character not found'}, 400)
 
     # Check character rules
-    err=CharacterModel.verify_char_rules(req_data)
+    err = CharacterModel.verify_char_rules(req_data)
     if err:
-        return err
+        return custom_response(err, 400)
 
     # Check hat rules if character has a hat
     if HatModel.char_has_hat(character_id):
-        hat_data = HatModel.get_hat_by_char(character_id)
-        err=HatModel.verify_hat_rules(req_data,{'color':hat_data.color.value})
+        hat_d = HatModel.get_hat_by_char(character_id)
+        err = HatModel.verify_hat_rules(req_data, {'color': hat_d.color.value})
         if err:
-            return err
+            return custom_response(err, 400)
 
     # Update the data
     character.update(req_data)
@@ -131,7 +134,7 @@ def delete(character_id):
 
     # The caracter doesn't exist
     if not character:
-        return custom_response({'error':'character not found'}, 400)
+        return custom_response({'error': 'character not found'}, 400)
 
     # The character has a hat : we delete it
     if HatModel.char_has_hat(character_id):
@@ -140,7 +143,8 @@ def delete(character_id):
 
     # We delete the character
     character.delete()
-    return custom_response({'message':'deleted'}, 200)
+    return custom_response({'message': 'deleted'}, 200)
+
 
 def custom_response(res, status_code):
     """
