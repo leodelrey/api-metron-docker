@@ -7,6 +7,7 @@ from .config import app_config
 from .models import db
 from .views.CharacterView import character_api as character_blueprint
 from .views.HatView import hat_api as hat_blueprint
+from .views.DataView import data_api as data_blueprint
 
 
 def create_app(config_name):
@@ -23,6 +24,7 @@ def create_app(config_name):
     db.init_app(app)
     app.register_blueprint(character_blueprint, url_prefix='/character')
     app.register_blueprint(hat_blueprint, url_prefix='/hat')
+    app.register_blueprint(data_blueprint, url_prefix='/data')
     with app.app_context():
         db.create_all()
     return app

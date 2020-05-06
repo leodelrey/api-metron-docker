@@ -105,7 +105,6 @@ class HatModel(Model):
             return {'error': 'non human character can\'t wear hat'}
 
 
-# Hat Schema to serialize Hat objects
 class HatSchema(Schema):
     """
     This is a Schema class to serialize Hat objects

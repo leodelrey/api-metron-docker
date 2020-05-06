@@ -12,7 +12,7 @@ class CharacterModel(Model):
 
     Attributes:
         id (int): The unique id of the character
-        name (String): The name of the character
+        name (str): The name of the character
         age (int): The age of the character
         weight (float): The weight of the character
         human (boolean): The character is human or not
@@ -84,7 +84,6 @@ class CharacterModel(Model):
         return '<id {}>'.format(self.id)
 
 
-# Character Schema to serialize Character objects
 class CharacterSchema(Schema):
     """
     This is a Schema class to serialize Character objects
