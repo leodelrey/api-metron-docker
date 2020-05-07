@@ -1,0 +1,46 @@
+version: "2"
+services:
+  postgres:
+    container_name: postgres
+    restart: always
+    env_file:
+      - .env
+    image: postgres:10
+    networks: 
+      - db_nw
+    environment:
+      - POSTGRES_USER=metron_api
+      - POSTGRES_PASSWORD=psswrd
+      - POSTGRES_DB=metron_api
+    volumes:
+      - ./postgres-data/postgres:/var/lib/postgresql/data
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app
+    restart: always
+    command: flask run
+    networks: 
+      - db_nw
+      - web_nw
+    env_file:
+      - .env
+    environment:
+      FLASK_ENV: production
+      SQLALCHEMY_DATABASE_URI: postgresql://metron_api:psswrd@localhost:5432/metron_api
+      FLASK_APP: run.py
+
+    command: flask run
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - 5000:5000
+    depends_on:
+      - postgres
+networks:
+  db_nw:
+    driver: bridge
+  web_nw:
+    driver: bridge
