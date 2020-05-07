@@ -27,7 +27,6 @@ def create():
 
     # Create the character
     character = CharacterModel(req_data)
-    character.save()
 
     # Create an associated hat if requested
     if hat_data:
@@ -39,10 +38,15 @@ def create():
         err = HatModel.verify_hat_rules(req_data, hat_data)
         if err:
             return custom_response(err, 400)
-        # Create the hat
+        # Save the character and create the hat
+        character.save()
         hat = HatModel({'color': hat_data.get('color'),
                         'character_id': character.id})
         hat.save()
+
+    # Create a character without hat
+    else:
+        character.save()
 
     return custom_response({'message': 'character created'}, 201)
 
@@ -98,23 +102,24 @@ def update(character_id):
     if not character:
         return custom_response({'error': 'character not found'}, 400)
 
+    # Serialize the character and update values
+    ser_char = character_schema.dump(character)
+    for key in req_data:
+        ser_char[key] = req_data[key]
     # Check character rules
-    err = CharacterModel.verify_char_rules(req_data)
+    err = CharacterModel.verify_char_rules(ser_char)
     if err:
         return custom_response(err, 400)
 
     # Check hat rules if character has a hat
     if HatModel.char_has_hat(character_id):
         hat_d = HatModel.get_hat_by_char(character_id)
-        err = HatModel.verify_hat_rules(req_data, {'color': hat_d.color.value})
+        err = HatModel.verify_hat_rules(ser_char, {'color': hat_d.color.value})
         if err:
             return custom_response(err, 400)
 
     # Update the data
-    character.update(req_data)
-
-    # Serialize new character to print
-    ser_char = character_schema.dump(character)
+    character.update(ser_char)
 
     return custom_response(ser_char, 200)
 

@@ -1,0 +1,7 @@
+action: python2.7, msg: getenv
+cwd: /Users/leoreynaert/Documents/Projects/metron_api/.tox
+cmd: /Users/leoreynaert/Documents/Projects/metron_api/flask/bin/python -m virtualenv --no-download --python /Users/leoreynaert/Documents/Projects/metron_api/flask/bin/python python2.7
+created virtual environment CPython3.7.3.final.0-64 in 737ms
+  creator CPython3Posix(dest=/Users/leoreynaert/Documents/Projects/metron_api/.tox/python2.7, clear=False, global=False)
+  seeder FromAppData(download=False, pip=latest, setuptools=latest, wheel=latest, via=copy, app_data_dir=/Users/leoreynaert/Library/Application Support/virtualenv/seed-app-data/v1.0.1)
+  activators BashActivator,CShellActivator,FishActivator,PowerShellActivator,PythonActivator,XonshActivator

@@ -18,15 +18,16 @@ def create_app(config_name):
         Returns:
             Flask: The application
     """
-    print(type(config_name))
+    # Create the app
     app = Flask(__name__)
     app.config.from_object(app_config[config_name])
     db.init_app(app)
+
+    # Add the endpoints from views files
     app.register_blueprint(character_blueprint, url_prefix='/character')
     app.register_blueprint(hat_blueprint, url_prefix='/hat')
     app.register_blueprint(data_blueprint, url_prefix='/data')
-    with app.app_context():
-        db.create_all()
+
     return app
 
 

@@ -1,0 +1,72 @@
+action: python2.7, msg: getenv
+cwd: /Users/leoreynaert/Documents/Projects/metron_api
+cmd: /Users/leoreynaert/Documents/Projects/metron_api/.tox/python2.7/bin/python -m pip install -r/Users/leoreynaert/Documents/Projects/metron_api/requirements.txt
+Collecting appdirs==1.4.3
+  Using cached appdirs-1.4.3-py2.py3-none-any.whl (12 kB)
+Collecting click==7.1.2
+  Using cached click-7.1.2-py2.py3-none-any.whl (82 kB)
+Processing /Users/leoreynaert/Library/Caches/pip/wheels/a2/19/da/a15d4e2bedf3062c739b190d5cb5b7b2ecfbccb6b0d93c861b/distlib-0.3.0-py3-none-any.whl
+Collecting entrypoints==0.3
+  Using cached entrypoints-0.3-py2.py3-none-any.whl (11 kB)
+Collecting filelock==3.0.12
+  Using cached filelock-3.0.12-py3-none-any.whl (7.6 kB)
+Collecting flake8==3.7.9
+  Using cached flake8-3.7.9-py2.py3-none-any.whl (69 kB)
+Collecting Flask==1.1.2
+  Using cached Flask-1.1.2-py2.py3-none-any.whl (94 kB)
+Collecting Flask-SQLAlchemy==2.4.1
+  Using cached Flask_SQLAlchemy-2.4.1-py2.py3-none-any.whl (17 kB)
+Collecting importlib-metadata==1.6.0
+  Using cached importlib_metadata-1.6.0-py2.py3-none-any.whl (30 kB)
+Collecting itsdangerous==1.1.0
+  Using cached itsdangerous-1.1.0-py2.py3-none-any.whl (16 kB)
+Collecting Jinja2==2.11.2
+  Using cached Jinja2-2.11.2-py2.py3-none-any.whl (125 kB)
+Collecting MarkupSafe==1.1.1
+  Using cached MarkupSafe-1.1.1-cp37-cp37m-macosx_10_6_intel.whl (18 kB)
+Collecting marshmallow==3.5.2
+  Using cached marshmallow-3.5.2-py2.py3-none-any.whl (45 kB)
+Collecting mccabe==0.6.1
+  Using cached mccabe-0.6.1-py2.py3-none-any.whl (8.6 kB)
+Collecting mypy==0.770
+  Using cached mypy-0.770-cp37-cp37m-macosx_10_6_x86_64.whl (15.4 MB)
+Collecting mypy-extensions==0.4.3
+  Using cached mypy_extensions-0.4.3-py2.py3-none-any.whl (4.5 kB)
+Collecting packaging==20.3
+  Using cached packaging-20.3-py2.py3-none-any.whl (37 kB)
+Collecting pluggy==0.13.1
+  Using cached pluggy-0.13.1-py2.py3-none-any.whl (18 kB)
+Collecting psycopg2-binary==2.8.5
+  Using cached psycopg2_binary-2.8.5-cp37-cp37m-macosx_10_6_intel.macosx_10_9_intel.macosx_10_9_x86_64.macosx_10_10_intel.macosx_10_10_x86_64.whl (1.5 MB)
+Collecting py==1.8.1
+  Using cached py-1.8.1-py2.py3-none-any.whl (83 kB)
+Collecting pycodestyle==2.5.0
+  Using cached pycodestyle-2.5.0-py2.py3-none-any.whl (51 kB)
+Collecting pyflakes==2.1.1
+  Using cached pyflakes-2.1.1-py2.py3-none-any.whl (59 kB)
+Collecting pyparsing==2.4.7
+  Using cached pyparsing-2.4.7-py2.py3-none-any.whl (67 kB)
+Collecting python-dotenv==0.13.0
+  Using cached python_dotenv-0.13.0-py2.py3-none-any.whl (17 kB)
+Collecting six==1.14.0
+  Using cached six-1.14.0-py2.py3-none-any.whl (10 kB)
+Processing /Users/leoreynaert/Library/Caches/pip/wheels/a1/ce/5e/5c9f51e51cbf4cd6dbcbe29e6628d5ffd4c11ca0fd5feba2b1/SQLAlchemy-1.3.16-cp37-cp37m-macosx_10_10_x86_64.whl
+Processing /Users/leoreynaert/Library/Caches/pip/wheels/aa/ff/74/5e97acf67e380ca69272972ddda291705c86d62d34bd1ab608/SQLAlchemy_Utils-0.36.4-py2.py3-none-any.whl
+Collecting toml==0.10.0
+  Using cached toml-0.10.0-py2.py3-none-any.whl (25 kB)
+Collecting tox==3.14.6
+  Using cached tox-3.14.6-py2.py3-none-any.whl (81 kB)
+Collecting typed-ast==1.4.1
+  Using cached typed_ast-1.4.1-cp37-cp37m-macosx_10_9_x86_64.whl (223 kB)
+Collecting typing-extensions==3.7.4.2
+  Using cached typing_extensions-3.7.4.2-py3-none-any.whl (22 kB)
+Collecting virtualenv==20.0.18
+  Using cached virtualenv-20.0.18-py2.py3-none-any.whl (4.6 MB)
+Collecting Werkzeug==1.0.1
+  Using cached Werkzeug-1.0.1-py2.py3-none-any.whl (298 kB)
+Collecting zipp==3.1.0
+  Using cached zipp-3.1.0-py3-none-any.whl (4.9 kB)
+Installing collected packages: appdirs, click, distlib, entrypoints, filelock, pycodestyle, pyflakes, mccabe, flake8, itsdangerous, MarkupSafe, Jinja2, Werkzeug, Flask, SQLAlchemy, Flask-SQLAlchemy, zipp, importlib-metadata, marshmallow, typing-extensions, mypy-extensions, typed-ast, mypy, pyparsing, six, packaging, pluggy, psycopg2-binary, py, python-dotenv, SQLAlchemy-Utils, toml, virtualenv, tox
+Successfully installed Flask-1.1.2 Flask-SQLAlchemy-2.4.1 Jinja2-2.11.2 MarkupSafe-1.1.1 SQLAlchemy-1.3.16 SQLAlchemy-Utils-0.36.4 Werkzeug-1.0.1 appdirs-1.4.3 click-7.1.2 distlib-0.3.0 entrypoints-0.3 filelock-3.0.12 flake8-3.7.9 importlib-metadata-1.6.0 itsdangerous-1.1.0 marshmallow-3.5.2 mccabe-0.6.1 mypy-0.770 mypy-extensions-0.4.3 packaging-20.3 pluggy-0.13.1 psycopg2-binary-2.8.5 py-1.8.1 pycodestyle-2.5.0 pyflakes-2.1.1 pyparsing-2.4.7 python-dotenv-0.13.0 six-1.14.0 toml-0.10.0 tox-3.14.6 typed-ast-1.4.1 typing-extensions-3.7.4.2 virtualenv-20.0.18 zipp-3.1.0
+WARNING: You are using pip version 20.0.2; however, version 20.1 is available.
+You should consider upgrading via the '/Users/leoreynaert/Documents/Projects/metron_api/.tox/python2.7/bin/python -m pip install --upgrade pip' command.
